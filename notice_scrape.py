@@ -64,7 +64,7 @@ def notice_scrape():
         # Skip pagination rows
         if row.get("class") and "pagination-ys" in row.get("class"):
             continue
-
+            
         link_tag = row.find("a", class_="float-right text-danger")
         if not link_tag:
             continue
