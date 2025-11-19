@@ -1,4 +1,5 @@
 from notice_scrape import notice_scrape
+from announcement_scrape import announcement_scrape
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -31,6 +32,23 @@ def download_notice():
             "count": len(notices),
             "notices": notices,  # New structured format with title and link
             "links": links_dict   # Backward compatible format
+        }
+    except Exception as e:
+        return {
+            "status": "failed",
+            "error": str(e)
+        }
+
+@app.get("/announcements")
+def get_announcements():
+    try:
+        data = announcement_scrape()
+        announcements = data.get("announcements", [])
+            
+        return {
+            "status": "success",
+            "count": len(announcements),
+            "announcements": announcements,  # New structured format with title and link
         }
     except Exception as e:
         return {
